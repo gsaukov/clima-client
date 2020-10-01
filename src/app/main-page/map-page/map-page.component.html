@@ -1,0 +1,90 @@
+<div id="map" class="map"></div>
+
+<div class="calculator-container">
+  <div class="calculator-content">
+    <div class="calculator-form">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" ngNativeValidate>
+        <div class="form-group">
+          <img class="target-icon" src="/assets/target.svg" (click)="subscribeForCoordinates(startInput)">
+          <input #startInput type="text" class="calculator-control" formControlName="start" placeholder="Start city" autocomplete="off" [required]="true"/>
+        </div>
+        <div class="form-group">
+          <img class="target-icon" src="/assets/target.svg" (click)="subscribeForCoordinates(endInput)">
+          <input #endInput type="text" class="calculator-control" formControlName="end" placeholder="End city" autocomplete="off" [required]="true"/>
+        </div>
+        <div class="form-group">
+          <select [required]="true" class="calculator-control" formControlName="transportation-method">
+            <option value="" [disabled]="true" [selected]="true" [hidden]="true">Select vehicle</option>
+            <option value="small-diesel-car">small diesel car</option>
+            <option value="small-petrol-car">small petrol car</option>
+            <option value="small-plugin-hybrid-car">small plugin hybrid car</option>
+            <option value="small-electric-car">small electric car</option>
+            <option value="medium-diesel-car">medium diesel car</option>
+            <option value="medium-petrol-car">medium petrol car</option>
+            <option value="medium-plugin-hybrid-car">medium plugin hybrid car</option>
+            <option value="medium-electric-car">medium electric car</option>
+            <option value="large-diesel-car">large diesel car</option>
+            <option value="large-petrol-car">large petrol car</option>
+            <option value="large-plugin-hybrid-car">large plugin hybrid car</option>
+            <option value="large-electric-car">large electric car</option>
+            <option value="bus">bus</option>
+            <option value="train">train</option>
+          </select>
+        </div>
+        <div class="form-group form-button">
+          <input type="submit" name="calculate" class="calculator-button" value="Calculate"/>
+        </div>
+      </form>
+      <span *ngIf="errorMessage">{{errorMessage}}</span>
+    </div>
+    <table class="calculator-table" *ngIf="resp">
+      <tbody>
+      <tr>
+        <td class="header-column">
+          CO2 Emission
+        </td>
+        <td>
+          :
+        </td>
+        <td>
+          {{resp.co2EmissionKG}} KG
+        </td>
+      </tr>
+      <tr>
+        <td class="header-column">
+          Distance
+        </td>
+        <td>
+          :
+        </td>
+        <td>
+          {{resp.distanceKM}} KM
+        </td>
+      </tr>
+      <tr>
+        <td class="header-column">
+          Vehicle type
+        </td>
+        <td>
+          :
+        </td>
+        <td>
+          {{resp.vehicleData.vehicleId}}
+        </td>
+      </tr>
+      <tr>
+        <td class="header-column">
+          Emission 1KM
+        </td>
+        <td>
+          :
+        </td>
+        <td>
+          {{resp.vehicleData.co2EmissionGR}} GR
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <app-loader *ngIf="loading"></app-loader>
+</div>

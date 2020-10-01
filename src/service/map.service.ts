@@ -1,0 +1,69 @@
+import { environment } from '../environments/environment';
+import {Injectable} from '@angular/core';
+
+const apiToken = environment.API_KEY
+declare var L: any
+
+const defaultCoords: number[] = [48.152126, 11.544467]
+const defaultZoom = 8
+
+@Injectable({
+  providedIn: 'root'
+})
+export class MapService {
+
+  private layerGroup;
+  private map;
+  private routeLayer
+  private myStyle = {
+    'color': '#3949AB',
+    'weight': 4,
+    'opacity': 0.8
+  };
+
+  constructor() { }
+
+  public renderMap(): void {
+    this.layerGroup = new L.LayerGroup()
+    this.map = L.map('map').setView(defaultCoords, defaultZoom)
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 18,
+    }).addTo(this.map)
+
+    this.layerGroup.addTo(this.map)
+  }
+
+  public renderMapCo2Emission(routeGeometry?: Array<Array<number>>): void {
+    var routeData = [ {
+      "type": "LineString",
+      "coordinates": routeGeometry }]
+
+    if(this.routeLayer){
+      this.layerGroup.removeLayer(this.routeLayer)
+    }
+
+    this.routeLayer = L.geoJSON(routeData, {
+      style: this.myStyle
+    })
+
+    this.layerGroup.addLayer(this.routeLayer)
+
+    this.map.fitBounds(this.routeLayer.getBounds())
+  }
+
+  public setCoordinatesOnMapClick(el){
+    const element = el
+    element.value = ""
+    element.dispatchEvent(new Event('input'));
+    L.DomUtil.addClass(this.map._container,'crosshair-cursor-enabled');
+    this.map.on('click', (e) => {
+      element.value = (e.latlng.lat + "," + e.latlng.lng)
+      element.dispatchEvent(new Event('input'));
+      this.map.removeEventListener(e.type)
+      L.DomUtil.removeClass(this.map._container,'crosshair-cursor-enabled');
+    })
+  }
+
+}
