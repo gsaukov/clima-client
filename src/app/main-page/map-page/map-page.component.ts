@@ -1,9 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MapService} from '../../../service/map.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Co2emissionService} from '../../../rest/co2emission.service';
-import {CO2EmissionResponse} from '../../../rest/model/cO2EmissionResponse';
+import {OpenrouteService} from '../../../rest/openroute.service';
+import {CO2EmissionResponse} from '../../../rest/model/CO2EmissionResponse';
 import {Subscription} from 'rxjs';
+import {Co2calculationService} from "../../../service/co2calculation.service";
 
 @Component({
   selector: 'app-map-page',
@@ -19,7 +20,7 @@ export class MapPageComponent implements OnInit, OnDestroy {
   errorMessage: string = null
 
   constructor(private mapService: MapService,
-              private co2emissionService: Co2emissionService) { }
+              private co2calculationService: Co2calculationService) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -41,22 +42,24 @@ export class MapPageComponent implements OnInit, OnDestroy {
     this.form.disable()
     this.resp = null
     this.errorMessage = null
-    this.aSub = this.co2emissionService.calculateCO2(this.form.value).subscribe(
-      (cO2EmissionResponse : CO2EmissionResponse) =>
-      {
-        this.resp = cO2EmissionResponse;
-        this.mapService.renderMapCo2Emission(cO2EmissionResponse.routeGeometry);
-        this.form.enable()
-        this.loading = false
-      },
-      (e) =>
-      {
-        console.log(e)
-        this.form.enable()
-        this.loading = false
-        this.errorMessage = e.error
-      }
-    )
+    this.co2calculationService.getCo2Emission(this.form.controls['start'].value, this.form.controls['end'].value, this.form.controls['transportation-method'].value,)
+
+    // this.aSub = this.co2emissionService.calculateCO2(this.form.value).subscribe(
+    //   (cO2EmissionResponse : CO2EmissionResponse) =>
+    //   {
+    //     this.resp = cO2EmissionResponse;
+    //     this.mapService.renderMapCo2Emission(cO2EmissionResponse.routeGeometry);
+    //     this.form.enable()
+    //     this.loading = false
+    //   },
+    //   (e) =>
+    //   {
+    //     console.log(e)
+    //     this.form.enable()
+    //     this.loading = false
+    //     this.errorMessage = e.error
+    //   }
+    // )
   }
 
   subscribeForCoordinates(el) {

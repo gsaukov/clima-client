@@ -1,4 +1,4 @@
-import { VehicleData } from './vehicleData';
+import { VehicleData } from './VehicleData';
 
 
 export interface CO2EmissionResponse {
