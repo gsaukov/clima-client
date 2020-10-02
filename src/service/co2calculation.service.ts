@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
-import {forkJoin, Observable, of, pipe, zip} from "rxjs";
-import {Geocode} from "../rest/model/GeocodeInterfaces";
+import {Observable, of, zip} from "rxjs";
 import {Direction} from "../rest/model/DirectionsInterfaces";
 import {OpenrouteService} from "../rest/openroute.service";
 import {CO2EmissionResponse} from "../rest/model/CO2EmissionResponse";
@@ -36,22 +35,15 @@ export class Co2calculationService {
     const vehicleData: VehicleData = this.findVehicle(vehicleId)
     const start$ = this.prepareCoordinate(start)
     const end$ = this.prepareCoordinate(end)
-    const zipped$ = zip(start$, end$)
-    const directions$ = zipped$.pipe(responses => this.openRouteService.getDirections(responses[0], responses[1]))
-    const directionResponse$ = directions$.pipe(
-                    map(
-                      response => {
-                      const co2EmissionResponse: CO2EmissionResponse = {
-                        co2EmissionKG: (response.features[0].properties.summary.distance * vehicleData.co2EmissionGR) / 1000,
-                        distanceKM: response.features[0].properties.summary.distance,
-                        end: end,
-                        routeGeometry: response.features[0].geometry.coordinates,
-                        start: start,
-                        vehicleData: vehicleData
-                      }
-                      return co2EmissionResponse
-                    }))
-    return directionResponse$.pipe()
+    const zipped$ = zip(start$, end$).pipe(
+      switchMap(responses => {
+          return this.openRouteService.getDirections(responses[0], responses[1])
+      }),
+      map(response => {
+        return this.toCo2EmissionResponse(response, start, end, vehicleData)
+      })
+    )
+    return zipped$;
   }
 
   private findVehicle(vehicleId: string): VehicleData{
@@ -103,4 +95,15 @@ export class Co2calculationService {
     }))
   }
 
+  private toCo2EmissionResponse (response: Direction, start: string, end: string, vehicleData: VehicleData): CO2EmissionResponse {
+    const co2EmissionResponse: CO2EmissionResponse = {
+      co2EmissionKG: (response.features[0].properties.summary.distance * vehicleData.co2EmissionGR) / 1000,
+      distanceKM: response.features[0].properties.summary.distance,
+      end: end,
+      routeGeometry: response.features[0].geometry.coordinates,
+      start: start,
+      vehicleData: vehicleData
+    }
+    return co2EmissionResponse
+  }
 }
