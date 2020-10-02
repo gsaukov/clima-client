@@ -5,7 +5,7 @@ import {Direction} from "../rest/model/DirectionsInterfaces";
 import {OpenrouteService} from "../rest/openroute.service";
 import {CO2EmissionResponse} from "../rest/model/CO2EmissionResponse";
 import {VehicleData} from "../rest/model/VehicleData";
-import {map} from "rxjs/operators";
+import {map, switchMap} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -34,25 +34,24 @@ export class Co2calculationService {
 
   public getCo2Emission(start: string, end: string, vehicleId: string): Observable<CO2EmissionResponse>{
     const vehicleData: VehicleData = this.findVehicle(vehicleId)
-    let start$ = this.prepareCoordinate(start)
-    let end$ = this.prepareCoordinate(end)
-    zip(start$, end$)
-      .pipe(map(responses => {
-        this.openRouteService.getDirections(responses[0], responses[1]).pipe(
-          map(response => {
-            const co2EmissionResponse: CO2EmissionResponse = {
-              co2EmissionKG: (response.features[0].properties.summary.distance * vehicleData.co2EmissionGR) / 1000,
-              distanceKM: response.features[0].properties.summary.distance,
-              end: end,
-              routeGeometry: response.features[0].geometry.coordinates,
-              start: start,
-              vehicleData: vehicleData
-            }
-            return co2EmissionResponse;
-          })
-        ).subscribe()
-      })
-      ).subscribe(data => d)
+    const start$ = this.prepareCoordinate(start)
+    const end$ = this.prepareCoordinate(end)
+    const zipped$ = zip(start$, end$)
+    const directions$ = zipped$.pipe(responses => this.openRouteService.getDirections(responses[0], responses[1]))
+    const directionResponse$ = directions$.pipe(
+                    map(
+                      response => {
+                      const co2EmissionResponse: CO2EmissionResponse = {
+                        co2EmissionKG: (response.features[0].properties.summary.distance * vehicleData.co2EmissionGR) / 1000,
+                        distanceKM: response.features[0].properties.summary.distance,
+                        end: end,
+                        routeGeometry: response.features[0].geometry.coordinates,
+                        start: start,
+                        vehicleData: vehicleData
+                      }
+                      return co2EmissionResponse
+                    }))
+    return directionResponse$.pipe()
   }
 
   private findVehicle(vehicleId: string): VehicleData{

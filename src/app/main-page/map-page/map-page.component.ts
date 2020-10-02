@@ -42,24 +42,26 @@ export class MapPageComponent implements OnInit, OnDestroy {
     this.form.disable()
     this.resp = null
     this.errorMessage = null
-    this.co2calculationService.getCo2Emission(this.form.controls['start'].value, this.form.controls['end'].value, this.form.controls['transportation-method'].value,)
-
-    // this.aSub = this.co2emissionService.calculateCO2(this.form.value).subscribe(
-    //   (cO2EmissionResponse : CO2EmissionResponse) =>
-    //   {
-    //     this.resp = cO2EmissionResponse;
-    //     this.mapService.renderMapCo2Emission(cO2EmissionResponse.routeGeometry);
-    //     this.form.enable()
-    //     this.loading = false
-    //   },
-    //   (e) =>
-    //   {
-    //     console.log(e)
-    //     this.form.enable()
-    //     this.loading = false
-    //     this.errorMessage = e.error
-    //   }
-    // )
+    this.co2calculationService.getCo2Emission(this.form.controls['start'].value,
+                                              this.form.controls['end'].value,
+                                              this.form.controls['transportation-method'].value)
+      .subscribe(
+      (cO2EmissionResponse : CO2EmissionResponse) =>
+              {
+                debugger
+                this.resp = cO2EmissionResponse;
+                this.mapService.renderMapCo2Emission(cO2EmissionResponse.routeGeometry);
+                this.form.enable()
+                this.loading = false
+              },
+              (e) =>
+              {
+                console.log(e)
+                this.form.enable()
+                this.loading = false
+                this.errorMessage = e.error
+              }
+            )
   }
 
   subscribeForCoordinates(el) {
