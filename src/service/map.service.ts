@@ -28,7 +28,7 @@ export class MapService {
     this.map = L.map('map').setView(defaultCoords, defaultZoom)
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href="https://gsaukov.netlify.app">Georgy Saukov</a>',
       maxZoom: 18,
     }).addTo(this.map)
 
@@ -36,7 +36,7 @@ export class MapService {
   }
 
   public renderMapCo2Emission(routeGeometry?: Array<Array<number>>): void {
-    var routeData = [ {
+    var routeData = [{
       "type": "LineString",
       "coordinates": routeGeometry }]
 
@@ -59,7 +59,7 @@ export class MapService {
     element.dispatchEvent(new Event('input'));
     L.DomUtil.addClass(this.map._container,'crosshair-cursor-enabled');
     this.map.on('click', (e) => {
-      element.value = (e.latlng.lat + "," + e.latlng.lng)
+      element.value = (e.latlng.lng + "," + e.latlng.lat)
       element.dispatchEvent(new Event('input'));
       this.map.removeEventListener(e.type)
       L.DomUtil.removeClass(this.map._container,'crosshair-cursor-enabled');

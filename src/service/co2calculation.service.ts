@@ -52,7 +52,7 @@ export class Co2calculationService {
 
   private prepareCoordinate(el: string): Observable<string> {
     if (this.isAlreadyCoordinate(el)) {
-      return this.getAsCoordinate(el)
+      return of(el)
     } else {
       return this.openRouteService.getCoordinates(el).pipe(
         map(response => {
@@ -65,11 +65,6 @@ export class Co2calculationService {
         })
       )
     }
-  }
-
-  private getAsCoordinate(el: string): Observable<string> {
-    const coordsArr: string[] = el.split(",").reverse()
-    return of(coordsArr.toString())
   }
 
   private isAlreadyCoordinate(el: string): boolean {
