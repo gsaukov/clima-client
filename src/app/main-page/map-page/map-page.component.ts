@@ -54,10 +54,13 @@ export class MapPageComponent implements OnInit, OnDestroy {
               },
               (e) =>
               {
-                console.log(e)
                 this.form.enable()
                 this.loading = false
-                this.errorMessage = e.error
+                if(e.error?.error?.message){
+                  this.errorMessage = e.error.error.message
+                } else {
+                  this.errorMessage = e.message
+                }
               }
             )
   }

@@ -56,7 +56,7 @@ export class Co2calculationService {
     } else {
       return this.openRouteService.getCoordinates(el).pipe(
         map(response => {
-          if (response.features) {
+          if (response.features[0]) {
             const coordinatesArr = response.features[0].geometry.coordinates
             return coordinatesArr[0].toString() + ',' + coordinatesArr[1].toString()
           } else {
