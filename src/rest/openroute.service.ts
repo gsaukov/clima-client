@@ -1,3 +1,4 @@
+import { environment } from '../environments/environment';
 import {Injectable} from "@angular/core";
 import {HttpClient} from '@angular/common/http';
 import {Observable} from "rxjs";
@@ -5,7 +6,7 @@ import {Geocode} from "./model/GeocodeInterfaces";
 import {Direction} from "./model/DirectionsInterfaces";
 
 const API_URL = 'https://api.openrouteservice.org'
-const API_KEY = '5b3ce3597851110001cf6248e4ee90a079ff4fb5ac6745be191eaf07'
+const API_KEY = environment.API_KEY
 
 @Injectable({
   providedIn: 'root'

@@ -1,7 +1,5 @@
-import { environment } from '../environments/environment';
 import {Injectable} from '@angular/core';
 
-const apiToken = environment.API_KEY
 declare var L: any
 
 const defaultCoords: number[] = [48.152126, 11.544467]
