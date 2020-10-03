@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MapService} from '../../../service/map.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {OpenrouteService} from '../../../rest/openroute.service';
 import {CO2EmissionResponse} from '../../../rest/model/CO2EmissionResponse';
 import {Subscription} from 'rxjs';
 import {Co2calculationService} from "../../../service/co2calculation.service";
@@ -48,7 +47,6 @@ export class MapPageComponent implements OnInit, OnDestroy {
       .subscribe(
       (cO2EmissionResponse : CO2EmissionResponse) =>
               {
-                debugger
                 this.resp = cO2EmissionResponse;
                 this.mapService.renderMapCo2Emission(cO2EmissionResponse.routeGeometry);
                 this.form.enable()
