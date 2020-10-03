@@ -1,4 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: Geneva;
+  src: url(assets/font/Geneva.TTF) format("regular");
+}
+
 body, body *  {
   font-size: 0.97em !important;
   font-family: Geneva !important;

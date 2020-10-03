@@ -75,14 +75,12 @@ export class MapPageComponent implements OnInit, OnDestroy {
   }
 
   async startTargetIconBlink() {
-    console.log("start focus")
     this.startTargetIcon = this.targetIconActive;
     await this.delay(2000);
     this.startTargetIcon = this.targetIcon
   }
 
   async endTargetIconBlink() {
-    console.log("start focus")
     this.endTargetIcon = this.targetIconActive;
     await this.delay(2000);
     this.endTargetIcon = this.targetIcon
