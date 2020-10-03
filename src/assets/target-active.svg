@@ -8,7 +8,7 @@
   <animate
     attributeType="XML"
     attributeName="fill"
-    values="blue;grey;blue;blue"
+    values="blue;red;blue;blue"
     dur="0.8s"
     repeatCount="indefinite"/>
 </svg>

@@ -6,8 +6,58 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    @font-face {
+      font-family: Geneva;
+      src: url(assets/font/Geneva.TTF);
+    }
+    body, body *  {
+      font-size: 0.97em;
+      font-family: Geneva !important;
+    }
+    .logo-wrapper{
+      width: 90%;
+      text-align: center;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+    }
+  </style>
+
 </head>
 <body>
-  <app-root></app-root>
+  <div style="top: 0; left: 0; bottom: 0; right: 0; color: gainsboro">
+    <div style="position: absolute; top: 10%; left: 31%;">
+      <div class="logo-wrapper" style="font-size: 13em;">
+        <div>R</div><div>O</div><div>U</div><div>T</div><div>E</div>
+      </div>
+      <div class="logo-wrapper" style="font-size: 21em;">
+        <div>C</div><div>O</div><div>2</div>
+      </div>
+      <div class="logo-wrapper" style="font-size: 6em; width: 97%;">
+        <div>C</div><div>A</div><div>L</div><div>C</div><div>U</div><div>L</div><div>A</div><div>T</div><div>O</div><div>R</div>
+      </div>
+    </div>
+  </div>
+<!--  <app-root></app-root>-->
+  <div id="firstLoader" style="position: absolute; bottom: 10%; left: 45%;">
+    <svg width="38" height="38" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="blue"
+         style="width: 100px ; height: 100px">
+      <g fill="none" fill-rule="evenodd">
+        <g transform="translate(1 1)" stroke-width="2">
+          <circle stroke-opacity=".5" cx="18" cy="18" r="18"/>
+          <path d="M36 18c0-9.94-8.06-18-18-18">
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              from="0 18 18"
+              to="360 18 18"
+              dur="1s"
+              repeatCount="indefinite"/>
+          </path>
+        </g>
+      </g>
+    </svg>
+  </div>
 </body>
 </html>
