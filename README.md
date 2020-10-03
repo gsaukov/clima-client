@@ -15,9 +15,11 @@ https://co2calculator.netlify.app
 * Angular 10 - Frontend framework.
 * RxJS - Reactive/Asynchronous integration with backend. Observables, Subscriptions, Operators.
 * HTML5 - Animations, effects, validations.
+* SVG - Hand made decorations and icons.
 * Leaflet - Interactive map, layers, GEO features.
 * OpenStreetMap - Map tiles, visual content.
 * OpenRouteService - Routing Data source.
+* Netlify - Static hosting and build slave https://netlify.app
 
 ### Build/Run steps
 
@@ -34,5 +36,9 @@ ng serve
 ```
 this will start client on http://localhost:4200/
 
+### Notes
+1. Client is manually tested against Safari, Chrome, Firefox and should run fine in them.
+2. Client might not work on smart phones.
+3. Menu blur might cause some performance and blinking screen on slow machines.
 
 
