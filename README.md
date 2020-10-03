@@ -1,27 +1,38 @@
-# Client
+# CLIMA Client - transport CO2 emission calculator.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.2.
+CLIMA allows users calculate their CO2 emission based on their transportation-method(vehicle) and route distance.  
+Route distance is calculated using openrouteservice.org directions and geocode API. User must provide "start" and "end" coordinates or alternatively city names and "vehicle".  
+User can provide coordinates directly from the map by clicking on target icon and then clicking on the desired place on the map.  
+Based on this information system will calculate: route path, distance and emitted CO2 value. All this information will be displayed on the map.
 
-## Development server
+Application is available here:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+https://co2calculator.netlify.app
 
-## Code scaffolding
+### Components:
+* TypeScript/JavaScript - core programming language.
+* NPM - Package manger. Build automation.
+* Angular 10 - Frontend framework.
+* RxJS - Reactive/Asynchronous integration with backend. Observables, Subscriptions, Operators.
+* HTML5 - Animations, effects, validations.
+* Leaflet - Interactive map, layers, GEO features.
+* OpenStreetMap - Map tiles, visual content.
+* OpenRouteService - Routing Data source.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Build/Run steps
 
-## Build
+You will need NODE NPM
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+You can import it into your IDE as gradle project so you can review source code build/test it using IDE.
 
-## Running unit tests
+Or build/run it manually:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```sh
+In clima-client folder run:
+npm install
+ng serve
+```
+this will start client on http://localhost:4200/
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
