@@ -19,7 +19,7 @@ https://co2calculator.netlify.app
 * Leaflet - Interactive map, layers, GEO features.
 * OpenStreetMap - Map tiles, visual content.
 * OpenRouteService - Routing Data source.
-* Netlify - Static hosting and build slave https://netlify.app
+* Netlify - Static hosting and build master https://netlify.app
 
 ### Build/Run steps
 
