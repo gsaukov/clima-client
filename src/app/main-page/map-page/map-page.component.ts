@@ -12,11 +12,16 @@ import {Co2calculationService} from "../../../service/co2calculation.service";
 })
 export class MapPageComponent implements OnInit, OnDestroy {
 
+  targetIcon: string = 'target.svg'
+  targetIconActive: string = 'target-active.svg'
+
   form: FormGroup
   aSub: Subscription
   resp: CO2EmissionResponse
   loading: boolean = false
   errorMessage: string = null
+  startTargetIcon: string = this.targetIcon
+  endTargetIcon: string = this.targetIcon
 
   constructor(private mapService: MapService,
               private co2calculationService: Co2calculationService) { }
@@ -69,4 +74,21 @@ export class MapPageComponent implements OnInit, OnDestroy {
     this.mapService.setCoordinatesOnMapClick(el)
   }
 
+  async startTargetIconBlink() {
+    console.log("start focus")
+    this.startTargetIcon = this.targetIconActive;
+    await this.delay(2000);
+    this.startTargetIcon = this.targetIcon
+  }
+
+  async endTargetIconBlink() {
+    console.log("start focus")
+    this.endTargetIcon = this.targetIconActive;
+    await this.delay(2000);
+    this.endTargetIcon = this.targetIcon
+  }
+
+  delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 }

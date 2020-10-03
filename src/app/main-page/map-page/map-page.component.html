@@ -5,12 +5,12 @@
     <div class="calculator-form">
       <form [formGroup]="form" (ngSubmit)="onSubmit()" ngNativeValidate>
         <div class="form-group">
-          <img class="target-icon" src="/assets/target.svg" (click)="subscribeForCoordinates(startInput)">
-          <input #startInput type="text" class="calculator-control" formControlName="start" placeholder="Start city name or coordinates" autocomplete="off" [required]="true"/>
+          <img class="target-icon" src='{{ "/assets/" + startTargetIcon }}' (click)="subscribeForCoordinates(startInput)">
+          <input #startInput type="text" class="calculator-control" formControlName="start" placeholder="Start city name or coordinates" autocomplete="off" [required]="true" (focus)="startTargetIconBlink()"/>
         </div>
         <div class="form-group">
-          <img class="target-icon" src="/assets/target.svg" (click)="subscribeForCoordinates(endInput)">
-          <input #endInput type="text" class="calculator-control" formControlName="end" placeholder="End city name or coordinates" autocomplete="off" [required]="true"/>
+          <img class="target-icon" src='{{ "/assets/" + endTargetIcon }}' (click)="subscribeForCoordinates(endInput)">
+          <input #endInput type="text" class="calculator-control" formControlName="end" placeholder="End city name or coordinates" autocomplete="off" [required]="true" (focus)="endTargetIconBlink()"/>
         </div>
         <div class="form-group">
           <select [required]="true" class="calculator-control" formControlName="transportation-method">
