@@ -14,7 +14,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     const loader = document.getElementById('firstLoader')
-    loader.style.display = "none";
+    loader.style.display = "none"
   }
 
 }

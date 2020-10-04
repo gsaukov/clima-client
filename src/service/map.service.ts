@@ -2,28 +2,28 @@ import {Injectable} from '@angular/core';
 
 declare var L: any
 
-const defaultCoords: number[] = [48.152126, 11.544467]
-const defaultZoom = 8
+const DEFAULT_COORDINATE: number[] = [48.152126, 11.544467]
+const DEFAULT_ZOOM = 8
 
 @Injectable({
   providedIn: 'root'
 })
 export class MapService {
 
-  private layerGroup;
-  private map;
+  private layerGroup
+  private map
   private routeLayer
   private myStyle = {
     'color': '#3949AB',
     'weight': 4,
     'opacity': 0.8
-  };
+  }
 
   constructor() { }
 
   public renderMap(): void {
     this.layerGroup = new L.LayerGroup()
-    this.map = L.map('map').setView(defaultCoords, defaultZoom)
+    this.map = L.map('map').setView(DEFAULT_COORDINATE, DEFAULT_ZOOM)
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href="https://gsaukov.netlify.app">Georgy Saukov</a>',
@@ -54,13 +54,13 @@ export class MapService {
   public setCoordinatesOnMapClick(el){
     const element = el
     element.value = ""
-    element.dispatchEvent(new Event('input'));
-    L.DomUtil.addClass(this.map._container,'crosshair-cursor-enabled');
+    element.dispatchEvent(new Event('input'))
+    L.DomUtil.addClass(this.map._container,'crosshair-cursor-enabled')
     this.map.on('click', (e) => {
       element.value = (e.latlng.lng + "," + e.latlng.lat)
-      element.dispatchEvent(new Event('input'));
+      element.dispatchEvent(new Event('input'))
       this.map.removeEventListener(e.type)
-      L.DomUtil.removeClass(this.map._container,'crosshair-cursor-enabled');
+      L.DomUtil.removeClass(this.map._container,'crosshair-cursor-enabled')
     })
   }
 

@@ -43,11 +43,11 @@ export class Co2calculationService {
         return this.toCo2EmissionResponse(response, start, end, vehicleData)
       })
     )
-    return zipped$;
+    return zipped$
   }
 
   private findVehicle(vehicleId: string): VehicleData {
-    return this.vehicles.find(x => x.vehicleId === vehicleId);
+    return this.vehicles.find(x => x.vehicleId === vehicleId)
   }
 
   private prepareCoordinate(el: string): Observable<string> {
@@ -70,9 +70,9 @@ export class Co2calculationService {
   private isAlreadyCoordinate(el: string): boolean {
     var reg = new RegExp(/^(-?\d+\.\d+)(\s*,\s*-?\d+\.\d+)+$/)
     if (reg.test(el)) {
-      return true;
+      return true
     } else {
-      return false;
+      return false
     }
   }
 

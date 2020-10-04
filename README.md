@@ -11,7 +11,7 @@ https://co2calculator.netlify.app
 
 ### Components:
 * TypeScript/JavaScript - core programming language.
-* NPM - Package manger. Build automation.
+* NPM - Package manager. Build automation.
 * Angular 10 - Frontend framework.
 * RxJS - Reactive/Asynchronous integration with backend. Observables, Subscriptions, Operators.
 * HTML5 - Animations, effects, validations.
@@ -40,5 +40,3 @@ this will start client on http://localhost:4200/
 1. Client is manually tested against Safari, Chrome, Firefox and should run fine in them.
 2. Client might not work on smart phones.
 3. Menu blur might cause some performance and blinking screen on slow machines.
-
-
