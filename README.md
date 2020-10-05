@@ -25,7 +25,7 @@ https://co2calculator.netlify.app
 
 You will need NODE NPM
 
-You can import it into your IDE as gradle project so you can review source code build/test it using IDE.
+You can import it into your IDE as Angular CLI project so you can review source code build/test it using IDE.
 
 Or build/run it manually:
 
