@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 
 declare var L: any
 
-const DEFAULT_COORDINATE: number[] = [60.152126, 11.544467]
+const DEFAULT_COORDINATE: number[] = [48.152126, 11.544467]
 const DEFAULT_ZOOM = 8
 
 @Injectable({
