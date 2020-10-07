@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 
 declare var L: any
 
-const DEFAULT_COORDINATE: number[] = [48.152126, 11.544467]
+const DEFAULT_COORDINATE: number[] = [60.152126, 11.544467]
 const DEFAULT_ZOOM = 8
 
 @Injectable({
@@ -19,7 +19,16 @@ export class MapService {
     'opacity': 0.8
   }
 
-  constructor() { }
+  constructor() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        console.log(position.coords.longitude + ' ' + position.coords.latitude)
+        this.map.setView([position.coords.latitude, position.coords.longitude], DEFAULT_ZOOM)
+      },
+        () => {},
+        {timeout:10000})
+    }
+  }
 
   public renderMap(): void {
     this.layerGroup = new L.LayerGroup()
