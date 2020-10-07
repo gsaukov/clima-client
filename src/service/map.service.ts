@@ -22,7 +22,6 @@ export class MapService {
   constructor() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
-        console.log(position.coords.longitude + ' ' + position.coords.latitude)
         this.map.setView([position.coords.latitude, position.coords.longitude], DEFAULT_ZOOM)
       },
         () => {},
