@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {RailroadRoute} from './model/RailroadRoute';
 
 const API_URL = 'http://raildar.fr'
+//rework with https://github.com/NTag/trainmap
 
 @Injectable({
   providedIn: 'root'
