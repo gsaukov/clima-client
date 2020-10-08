@@ -5,6 +5,8 @@ import {OpenrouteService} from "../rest/openroute.service";
 import {CO2EmissionResponse} from "../rest/model/CO2EmissionResponse";
 import {VehicleData} from "../rest/model/VehicleData";
 import {map, switchMap} from "rxjs/operators";
+import {RaildarService} from '../rest/raildar.service';
+import {RailroadRoute} from '../rest/model/RailroadRoute';
 
 @Injectable({
   providedIn: 'root'
@@ -28,11 +30,20 @@ export class Co2calculationService {
     {vehicleId: 'train', co2EmissionGR: 6}
   ]
 
-  constructor(private openRouteService: OpenrouteService) {
+  constructor(private openRouteService: OpenrouteService,
+              private raildarService: RaildarService) {
   }
 
   public getCo2Emission(start: string, end: string, vehicleId: string): Observable<CO2EmissionResponse> {
     const vehicleData: VehicleData = this.findVehicle(vehicleId)
+    if(vehicleData.vehicleId === 'train'){
+      return this.getCo2EmissionTrain(start, end, vehicleData)
+    } else {
+      return this.getCo2EmissionCar(start, end, vehicleData)
+    }
+  }
+
+  private getCo2EmissionCar(start: string, end: string, vehicleData: VehicleData): Observable<CO2EmissionResponse> {
     const start$ = this.prepareCoordinate(start)
     const end$ = this.prepareCoordinate(end)
     const zipped$ = zip(start$, end$).pipe(
@@ -41,6 +52,20 @@ export class Co2calculationService {
       }),
       map(response => {
         return this.toCo2EmissionResponse(response, start, end, vehicleData)
+      })
+    )
+    return zipped$
+  }
+
+  private getCo2EmissionTrain(start: string, end: string, vehicleData: VehicleData): Observable<CO2EmissionResponse> {
+    const start$ = this.prepareCoordinate(start)
+    const end$ = this.prepareCoordinate(end)
+    const zipped$ = zip(start$, end$).pipe(
+      switchMap(responses => {
+        return this.raildarService.getRailroadRoute(responses[0], responses[1])
+      }),
+      map(response => {
+        return this.toCo2EmissionResponseTrain(response, start, end, vehicleData)
       })
     )
     return zipped$
@@ -84,6 +109,20 @@ export class Co2calculationService {
       distanceKM: +distanceKM.toFixed(3),
       end: end,
       routeGeometry: response.features[0].geometry.coordinates,
+      start: start,
+      vehicleData: vehicleData
+    }
+    return co2EmissionResponse
+  }
+
+  private toCo2EmissionResponseTrain(response: RailroadRoute, start: string, end: string, vehicleData: VehicleData): CO2EmissionResponse {
+    const distanceKM = response.route_summary.total_distance / 1000
+    const emissionKG = vehicleData.co2EmissionGR / 1000
+    const co2EmissionResponse: CO2EmissionResponse = {
+      co2EmissionKG: +(distanceKM * emissionKG).toFixed(3),
+      distanceKM: +distanceKM.toFixed(3),
+      end: end,
+      routeGeometry: this.raildarService.decodeGeometry(response.route_geometry),
       start: start,
       vehicleData: vehicleData
     }

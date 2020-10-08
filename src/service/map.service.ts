@@ -25,7 +25,7 @@ export class MapService {
         this.map.setView([position.coords.latitude, position.coords.longitude], DEFAULT_ZOOM)
       },
         () => {},
-        {timeout:10000})
+        {timeout:2000})
     }
   }
 
